@@ -6,6 +6,8 @@ async def send_message():
   message = input("Enter your message to the server: ")
   async with websockets.connect(url) as websocket:
     await websocket.send(message)
+    ack_message = await websocket.recv()
+    print(ack_message)
 
 if __name__ == "__main__":
   loop = asyncio.get_event_loop()

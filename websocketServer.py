@@ -2,8 +2,10 @@ import asyncio
 import websockets
 
 async def message_handler(websocket, path):
+  ip_addr, port_id, *_ = websocket.remote_address
   message = await websocket.recv()
-  print(f'> {message}')
+  print(f'>{ip_addr}:{port_id} - {message}')
+  await websocket.send('Received message')
 
 start_server = websockets.serve(message_handler, "localhost", 8000)
 

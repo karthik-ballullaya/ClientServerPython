@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <script>
+    {
+        const url = "ws://127.0.0.1:5678/"
+        function sendMessage(e) {
+          console.log('event :>> ', e);
+          alert("Hi")
+          const socket = new WebSocket(url);
+          socket.send(e.message);
+          e.preventDefault();
+        }
+    }
+    </script>
+    <head>
+        <title>WebSocket demo</title>
+    </head>
+    <body>
+      <form id="message-form">
+        <input type="text" name="message" placeholder="Type your message">
+        <input type="submit" value="SEND" onclick="sendMessage">
+      </form>
+    </body>
+</html>
