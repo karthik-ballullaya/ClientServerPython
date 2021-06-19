@@ -21,7 +21,7 @@ class ClientMessageHandler(Thread):
     
   def stop(self):
     if self.sock:
-      sock.close()
+      self.sock.close()
   
   def run(self):
     try:
@@ -36,6 +36,8 @@ class ClientMessageHandler(Thread):
           sock.sendall(ClientMessageHandler.REPLY_MESSAGE)
     except ConnectionAbortedError:
       print(f'Client {ip}:{port} closed unexpectedly')
+    finally: # Terminate the thread
+      self.sock.close()
 
 if __name__ == '__main__':
   tcpsock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -54,6 +56,3 @@ if __name__ == '__main__':
         threads.append(newthread)
     except (SystemExit, KeyboardInterrupt) as e:
       print('Closing server...')
-      for thread in threads:
-        thread.stop()
-        thread.join()
